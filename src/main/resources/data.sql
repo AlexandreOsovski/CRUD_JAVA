@@ -1,7 +1,8 @@
-CREATE TABLE `Usuarios`.`Usuario` (
-    `id` INT(11) NOT NULL AUTO_INCREMENT AND ADD UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-    `nome` VARCHAR(255) NULL,
-    `sobreNome` VARCHAR(255) NULL,
-    `senha` VARCHAR(45) NULL,
-    PRIMARY KEY (`id`)
-);
+INSERT INTO `sakila`.`usuario` (`nome`,`senha`,`sobre_nome`)
+VALUES
+  ("Sinara",94991,"Osovski"),
+  ("Alexandre",49751,"Osovski"),
+  ("Andre",98637,"Osovski"),
+  ("Adnan",32366,"Osovski"),
+  ("Suzimara",12876,"Osovski");
+
