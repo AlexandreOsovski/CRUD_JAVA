@@ -1,6 +1,9 @@
 package com.fortechcode.project.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,20 +17,40 @@ public class UsuarioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //serve para identificar como a coluna id será gerada. Nesse caso será definido pelo próprio banco de dados
 
-    private Long    id;
-    private String  nome;
-    private String  senha;
+    private Long   id;
 
-    @Column(name = "sobre_nome")
-    private String  sobreNome;
+    @NotBlank(message = "{nome.not.blank}")
+    private String nome;
+
+    @NotBlank(message = "{sobrenome.not.blank}")
+    private String sobrenome;
+
+    @NotBlank(message = "{senha.not.blank}")
+    private String senha;
+
+    @Email(message = "{email.not.valid}")
+    @NotBlank(message = "{email.not.blank}")
+    private String email;
 
     public String getNome() {
         return nome;
     }
 
     public String setNome(String nome) {
+
         this.nome = nome;
         return nome;
+
+
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public String setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+        return sobrenome;
     }
 
     public String getSenha() {
@@ -40,13 +63,6 @@ public class UsuarioModel {
     }
 
 
-    public String getSobreNome() {
-        return sobreNome;
-    }
 
-    public String setSobreNome(String sobreNome) {
-        this.sobreNome = sobreNome;
-        return sobreNome;
-    }
 
 }
