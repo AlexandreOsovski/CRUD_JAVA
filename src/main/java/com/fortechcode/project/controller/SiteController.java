@@ -11,5 +11,15 @@ public class SiteController {
     public String site() {
         return "Site/site";
     }
+
+    @GetMapping("/login")
+    public String login(){
+        return "Usuario/login";
+    }
+
+    @GetMapping("/cadastro")
+    public String cadastro(){
+        return "Usuario/cadastro";
+    }
 }
 

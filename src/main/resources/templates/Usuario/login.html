@@ -1,55 +1,39 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" th:href="@{/bootstrap-V5.3/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css}">
-        <link rel="stylesheet" th:href="@{/css/estilo_site.css}">
-        <script th:src="@{/bootstrap-V5.3/jquery-3.6.3.min.js}"></script>
-        <script th:src="@{/bootstrap-V5.3/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js}"></script>
-        <link rel="fonts" th:href="@{/fonts}">
-    
-    
-        <title>Login</title>
-    </head>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/header :: header}"></head>
+
 <body>
-    <nav class="navbar navbar-geral">
+<div th:replace="~{layouts/navbar :: navbar}"></div>
+    <form th:action="@{/loginUsuario/}" th:object="${usuarioModel}" method="post">
         <div class="container-fluid">
-            <h4 class="text-dark titulo_navbar">ForTechCode</h4>
-            <div class="d-flex">
-                <a style="text-decoration: none;" class="text-dark" href="/"><button class="btn btn botao-geral" type="submit" style="margin-top: 10px;">Voltar para o site</button></a> 
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid">
-        <div class="row d-flex">
-            <div class="col-12">
-                <div class="d-flex mt-5 justify-content-center">
-                    <div class="card mb-3 card-cadastro">
-                        <div class="card-body" >
-                            <h2 class="text-dark">Login</h2>
-                            <div class="col-12 mb-3">
-                                <label class="col-12 mb-2 mt-2 text-dark">E-mail*</label>
-                                <input class=" input-cadastro-login col-12" type="email" name="email" autocomplete="off">
-                            </div>
-                            <div class="col-12 mb-3">
-                                <label class="col-12 mb-2 mt-2 text-dark">Senha*</label>
-                                <input class=" input-cadastro-login col-12" type="password" name="senha" autocomplete="off">
-                            </div>
-                            <hr class="text-dark mt-2">
-                            <div class="col-12 mt-2">
-                                <label class="text-dark">Não possui uma conta?<a class="text-dark" style="text-decoration:underline;" href="/cadastro">Faça o cadastro</a></label>
-                            </div>
-                            <div class="col-12 mt-2">
-                                <button class="botao-geral" style="width: 100%;" role="button"><a>Login</a></button>
+            <div class="row d-flex">
+                <div class="col-12">
+                    <div class="d-flex mt-5 justify-content-center">
+                        <div class="card mb-3 card-cadastro">
+                            <div class="card-body" >
+                                <h2 class="text-dark">Login</h2>
+                                <div class="col-12 mb-3">
+                                    <label class="col-12 mb-2 mt-2 text-dark">E-mail*</label>
+                                    <input class=" input-cadastro-login col-12" type="email" th:field="${email}" autocomplete="off">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="col-12 mb-2 mt-2 text-dark">Senha*</label>
+                                    <input class=" input-cadastro-login col-12" type="password" th:field="${senha}" autocomplete="off">
+                                </div>
+                                <hr class="text-dark mt-2">
+                                <div class="col-12 mt-2">
+                                    <label class="text-dark">Não possui uma conta?<a class="text-dark" style="text-decoration:underline;" href="/cadastro">Faça o cadastro</a></label>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <button class="botao-geral" style="width: 100%;" role="button"><a>Login</a></button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </body>
 
 </html>
