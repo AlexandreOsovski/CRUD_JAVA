@@ -9,10 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.fortechcode.project.model.UsuarioModel;
-import java.util.Collections;
-import java.util.List;
-import org.springframework.ui.Model;
-
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 @Controller
@@ -26,56 +24,41 @@ public class UsuarioController {
         this.usuarioRepository = usuarioRepository;
     }
 
-    @RequestMapping(value = "/login/", method = RequestMethod.GET)
-    public String login() {
-        return "Usuario/login";
-    }
-    public String cadastro(){
-        return "Usuario/cadastro";
-    }
-    public String site(){
-        return "Site/site";
+
+
+    private ModelAndView home(){
+        ModelAndView modelAndView = new ModelAndView("Dashboard/dashboard");
+        return modelAndView;
     }
 
-    @GetMapping("/getUsuarios/")
-    public List findAll() {
-        if (usuarioRepository.findAll() == null) {
-            return Collections.singletonList("Sem usuarios");
-        }
-        return usuarioRepository.findAll();
-    }
-
-    @PostMapping("/loginUsuario/")
-    public String loginUsuario(@RequestBody @Valid UsuarioModel usuarioModel, BindingResult result) {
-        if (result.hasErrors()) {
-            return "login";
-        }
-
+    @RequestMapping(value = "/usuarioLogin/", method = RequestMethod.POST)
+    public String loginUsuario(@Valid @ModelAttribute UsuarioModel usuarioModel, BindingResult result) {
         UsuarioModel verificaUsuario = usuarioRepository.findByEmail(usuarioModel.getEmail());
+        RedirectView redirectView = new RedirectView();
         if (verificaUsuario == null || !verificaUsuario.getSenha().equals(usuarioModel.getSenha())) {
             result.rejectValue("email", "email or password incorrect");
-            return "login";
+//            ModelAndView modelAndView = new ModelAndView("Usuario/login");
+//            return modelAndView;
         }
 
-        // caso de sucesso
-        return usuarioRepository.toString();
+        return "redirect:/Dashboard/dashboard";
     }
 
 
-    @GetMapping(path = {"/getUsuarios/{id}"})
+    @RequestMapping(value = {"/getUsuarios/{id}"}, method = RequestMethod.GET)
     public ResponseEntity findById(@PathVariable long id) {
         return usuarioRepository.findById(id)
                 .map(record -> ResponseEntity.ok().body(record))
                 .orElse(ResponseEntity.notFound().build());
 
-
     }
 
     @RequestMapping(value = "/salvarUsuario/", method = RequestMethod.POST)
-    public @ResponseBody String salvaUsuarios(@ModelAttribute @Valid UsuarioModel usuarioModel, BindingResult result) {
+    public @ResponseBody ModelAndView salvaUsuarios(@ModelAttribute @Valid UsuarioModel usuarioModel, BindingResult result) {
 
         if (result.hasErrors()) {
-            return "login";
+            ModelAndView modelAndView =  new ModelAndView("Usuario/login");
+            return modelAndView;
         }
 
         UsuarioModel verificaEmail = usuarioRepository.findByEmail(usuarioModel.getEmail());
@@ -97,7 +80,8 @@ public class UsuarioController {
             }
         }
         usuarioRepository.save(usuarioModel);
-        return "Site/site";
+        ModelAndView modelAndView = new ModelAndView("Usuario/login");
+        return modelAndView;
     }
 
 
