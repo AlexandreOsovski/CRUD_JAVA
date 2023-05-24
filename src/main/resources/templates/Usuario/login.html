@@ -2,38 +2,43 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layouts/header :: header}"></head>
 
-<body>
-<div th:replace="~{layouts/navbar :: navbar}"></div>
-<form id="loginForm" th:action="@{/usuarioLogin/}" th:object="${usuarioModel}" method="post">
-    <div class="container-fluid">
-        <div class="row d-flex">
-            <div class="col-12">
-                <div class="d-flex mt-5 justify-content-center">
-                    <div class="card mb-3 card-cadastro">
-                        <div class="card-body">
-                            <h2 class="text-dark">Login</h2>
-                            <div class="col-12 mb-3">
-                                <label class="col-12 mb-2 mt-2 text-dark">E-mail*</label>
-                                <input class="input-cadastro-login col-12" type="email" name="email" field="${email}" autocomplete="off">
-                            </div>
-                            <div class="col-12 mb-3">
-                                <label class="col-12 mb-2 mt-2 text-dark">Senha*</label>
-                                <input class="input-cadastro-login col-12" type="password" name="senha" field="${senha}" autocomplete="off">
-                            </div>
-                            <hr class="text-dark mt-2">
-                            <div class="col-12 mt-2">
-                                <label class="text-dark">Não possui uma conta?<a class="text-dark" style="text-decoration:underline;" href="/cadastro">Faça o cadastro</a></label>
-                            </div>
-                            <div class="col-12 mt-2">
-                                <button id="loginButton" class="botao-geral" style="width: 100%;" role="button">Login</button>
+
+    <body>
+
+    <!--NAVBAR-->
+    <div th:replace="~{layouts/navbar :: navbar}"></div>
+    <!--FIM NAVBAR-->
+
+    <form id="loginForm" th:action="@{/usuarioLogin/}" th:object="${usuarioModel}" method="post">
+        <div class="container-fluid">
+            <div class="row d-flex">
+                <div class="col-12">
+                    <div class="d-flex mt-5 justify-content-center">
+                        <div class="card mb-3 card-cadastro">
+                            <div class="card-body">
+                                <h2 class="text-dark">Login</h2>
+                                <div class="col-12 mb-3">
+                                    <label class="col-12 mb-2 mt-2 text-dark">E-mail*</label>
+                                    <input class="input-cadastro-login col-12" type="email" name="email" field="${email}" autocomplete="off">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="col-12 mb-2 mt-2 text-dark">Senha*</label>
+                                    <input class="input-cadastro-login col-12" type="password" name="senha" field="${senha}" autocomplete="off">
+                                </div>
+                                <hr class="text-dark mt-2">
+                                <div class="col-12 mt-2">
+                                    <label class="text-dark">Não possui uma conta?<a class="text-dark" style="text-decoration:underline;" href="/cadastro">Faça o cadastro</a></label>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <button id="loginButton" class="botao-geral" style="width: 100%;" role="button">Login</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 </body>
 
 </html>

@@ -17,9 +17,11 @@ public class SiteController {
         return "Usuario/login";
     }
 
-    @GetMapping("/cadastro")
+    @GetMapping("/cadastro/")
     public String cadastro(){
         return "Usuario/cadastro";
     }
+
+
 }
 

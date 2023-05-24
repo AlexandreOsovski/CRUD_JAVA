@@ -25,7 +25,7 @@ public class UsuarioModel {
     @NotBlank(message = "{sobrenome.not.blank}")
     private String sobrenome;
 
-    @NotBlank(message = "{senha.not.blank}")
+//    @NotBlank(message = "{senha.not.blank}")
     private String senha;
 
     @Email(message = "{email.not.valid}")

@@ -1,14 +1,14 @@
 body {
-    background-image: url("../imgs/muro_tijolos.jpg");
+    /*background-image: url("../imgs/muro_tijolos.jpg");*/
     background-size: cover;
     /* background-color: rgb(232, 241, 242); */
 }
 
 @font-face {
-    font-family: "ARCADECLASSIC";
+    /*font-family: "ARCADECLASSIC";*/
 
     /*Caso a fonte esteja na mesma pasta*/
-    src: url("../fonts/fonts_arcade_classic/ARCADECLASSIC.TTF");
+    /*src: url("../fonts/fonts_arcade_classic/ARCADECLASSIC.TTF");*/
 }
 
 h1,
@@ -20,7 +20,8 @@ h6,
 label,
 a,
 button {
-    font-family: "ARCADECLASSIC";
+    /*font-family: "ARCADECLASSIC";*/
+    font-family: 'Courier New', Courier, monospace;
     text-decoration: none;
 }
 
@@ -28,13 +29,11 @@ button {
 
 .card-cadastro {
     border-radius: 16px;
-
-    margin-left: 20px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
-.navbar-geral {
+.navbar-geral, .navbar_dashboard {
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }

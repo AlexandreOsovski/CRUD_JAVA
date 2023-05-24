@@ -12,7 +12,6 @@ import com.fortechcode.project.model.UsuarioModel;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class UsuarioController {
@@ -21,9 +20,6 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
     private UsuarioModel usuarioModel;
 
-    UsuarioController(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
-    }
 
     @PostMapping("/usuarioLogin/")
     public String loginUsuario(@Valid @ModelAttribute UsuarioModel usuarioModel, BindingResult result, Model model) {
@@ -38,19 +34,20 @@ public class UsuarioController {
         }
     }
 
-    @RequestMapping(value = {"/getUsuarios/{id}"}, method = RequestMethod.GET)
-    public ResponseEntity findById(@PathVariable long id) {
-        return usuarioRepository.findById(id)
-                .map(record -> ResponseEntity.ok().body(record))
-                .orElse(ResponseEntity.notFound().build());
-
+    @GetMapping("/perfil/{id}")
+    public String perfil(@PathVariable long id, Model model) {
+        UsuarioModel usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
+        model.addAttribute("usuario", usuario);
+        return "Usuario/perfil";
     }
 
-    @RequestMapping(value = "/salvarUsuario/", method = RequestMethod.POST)
-    public @ResponseBody ModelAndView salvaUsuarios(@ModelAttribute @Valid UsuarioModel usuarioModel, BindingResult result) {
+    @PostMapping("/salvarUsuario/")
+    public ModelAndView salvaUsuarios(@ModelAttribute @Valid UsuarioModel usuarioModel, BindingResult result) {
 
         if (result.hasErrors()) {
-            ModelAndView modelAndView =  new ModelAndView("Usuario/login");
+
+            ModelAndView modelAndView = new ModelAndView("Usuario/login");
             return modelAndView;
         }
 
@@ -73,55 +70,54 @@ public class UsuarioController {
             }
         }
         usuarioRepository.save(usuarioModel);
-        ModelAndView modelAndView = new ModelAndView("Usuario/login");
+        ModelAndView modelAndView = new ModelAndView("redirect:/perfil/" + usuarioModel.getId());
         return modelAndView;
     }
 
 
-    @PostMapping("/alterarUsuario/")
-    public ResponseEntity<UsuarioModel> updateUsuario(@Valid @ModelAttribute     UsuarioModel usuarioAtualizado) {
 
+    @PostMapping("/alterarUsuario/")
+    public ModelAndView updateUsuario(@Valid @ModelAttribute UsuarioModel usuarioAtualizado) {
         long id = usuarioAtualizado.getId();
 
         UsuarioModel usuarioExistente = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
 
-        if(id == usuarioExistente.getId()){
-            if (usuarioAtualizado.getNome() != null) {
-                usuarioExistente.setNome(usuarioAtualizado.getNome());
-            }
-            if (usuarioAtualizado.getSobrenome() != null) {
-                usuarioExistente.setSobrenome(usuarioAtualizado.getSobrenome());
-            }
-            if (usuarioAtualizado.getEmail() != null) {
-                UsuarioModel verificaEmail = usuarioRepository.findByEmail(usuarioAtualizado.getEmail());
-                if (verificaEmail != null && verificaEmail.getId() != usuarioExistente.getId()) {
-                    throw new IllegalArgumentException("Já existe esse email cadastrado em nosso banco de dados: " + usuarioAtualizado.getEmail());
-                }
-                usuarioExistente.setEmail(usuarioAtualizado.getEmail());
-            }
-            if (usuarioAtualizado.getSenha() != null) {
-                usuarioExistente.setSenha(usuarioAtualizado.getSenha());
-            }
+        if (id != usuarioExistente.getId()) {
+            throw new IllegalArgumentException("ID do usuário atualizado não corresponde ao ID do usuário existente.");
         }
 
+        if (usuarioAtualizado.getNome() != null) {
+            usuarioExistente.setNome(usuarioAtualizado.getNome());
+        }
+        if (usuarioAtualizado.getSobrenome() != null) {
+            usuarioExistente.setSobrenome(usuarioAtualizado.getSobrenome());
+        }
+        if (usuarioAtualizado.getEmail() != null) {
+            UsuarioModel verificaEmail = usuarioRepository.findByEmail(usuarioAtualizado.getEmail());
+            if (verificaEmail != null && verificaEmail.getId() != usuarioExistente.getId()) {
+                throw new IllegalArgumentException("Já existe esse email cadastrado em nosso banco de dados: " + usuarioAtualizado.getEmail());
+            }
+            usuarioExistente.setEmail(usuarioAtualizado.getEmail());
+        }
+        if (usuarioAtualizado.getSenha() != null && !usuarioAtualizado.getSenha().isEmpty()) {
+            usuarioExistente.setSenha(usuarioAtualizado.getSenha());
+        }
 
         UsuarioModel usuarioAtualizadoSalvo = usuarioRepository.save(usuarioExistente);
-        return ResponseEntity.ok(usuarioAtualizadoSalvo);
-
+        ModelAndView modelAndView = new ModelAndView("redirect:/perfil/" + id);
+        return modelAndView;
     }
 
+    @DeleteMapping("/deletarUsuario/{id}")
+    public String deleteUsuario(@PathVariable long id) {
+        UsuarioModel usuarioExistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
 
-
-    @DeleteMapping(path ={"/deleteUsuario/{id}"})
-    public ResponseEntity <?> deleteUsuario(@Valid @ModelAttribute long id) {
-
-        return usuarioRepository.findById(id)
-                .map(record -> {
-                    usuarioRepository.deleteById(id);
-                    return ResponseEntity.ok().build();
-                }).orElse(ResponseEntity.notFound().build());
+        usuarioRepository.deleteById(usuarioExistente.getId());
+        return "redirect:/Usuario/cadastro";
     }
+
 
 }
 
