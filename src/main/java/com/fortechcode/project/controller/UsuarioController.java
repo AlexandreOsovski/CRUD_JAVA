@@ -4,7 +4,6 @@ import com.fortechcode.project.exception.ResourceNotFoundException;
 import com.fortechcode.project.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
 
 @Controller
+@RequestMapping("/areadocliente")
 public class UsuarioController {
 
     @Autowired
@@ -21,25 +21,47 @@ public class UsuarioController {
     private UsuarioModel usuarioModel;
 
 
-    @PostMapping("/usuarioLogin/")
+    @GetMapping
+    public String login(final Model model) {
+
+        return "AreaDoCliente/login";
+    }
+
+    @GetMapping("/cadastro")
+    public String cadastro(final Model model) {
+        model.addAttribute("usuarioModel", new UsuarioModel());
+
+        return "AreaDoCliente/cadastro";
+    }
+
+//    @GetMapping("/perfil/{id}")
+//    public String perfil(final Model model){
+//        model.addAttribute("usuarioModel", usuarioRepository);
+//        return "AreaDoCliente/cadastro";
+//    }
+
+
+
+    @PostMapping
     public String loginUsuario(@Valid @ModelAttribute UsuarioModel usuarioModel, BindingResult result, Model model) {
         UsuarioModel verificaUsuario = usuarioRepository.findByEmail(usuarioModel.getEmail());
 
         if (verificaUsuario == null || !verificaUsuario.getSenha().equals(usuarioModel.getSenha())) {
             result.rejectValue("email", "incorrectCredentials", "Email or password incorrect");
-            return null;
+            return "redirect:/ AreaDoCliente/login";
         } else {
             model.addAttribute("usuario", verificaUsuario);
             return "Dashboard/dashboard";
         }
     }
 
+
     @GetMapping("/perfil/{id}")
-    public String perfil(@PathVariable long id, Model model) {
+    public String perfil(@PathVariable long id,final Model model) {
         UsuarioModel usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
         model.addAttribute("usuario", usuario);
-        return "Usuario/perfil";
+        return "AreaDoCliente/perfil";
     }
 
     @PostMapping("/salvarUsuario/")

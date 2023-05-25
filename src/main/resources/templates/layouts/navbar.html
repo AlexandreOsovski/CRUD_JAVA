@@ -10,10 +10,12 @@
 <div th:fragment="navbar_dashboard" th:object="${usuarioModel}">
     <nav class="navbar navbar_dashboard bg-body-tertiary">
         <div class="container-fluid">
+            <input type="hidden" th:field="${usuario.id}">
             <h6 class="navbar-brand text-dark" th:text="${usuario.nome}"></h6>
-            <form class="d-flex" role="search" th:action="@{/perfil/{id}(id=${usuario.id})}">
-                <button class="btn botao-geral" type="submit">Perfil</button>
-            </form>
+
+            <a class="botao-geral" th:href="@{areadocliente/perfil/{id}(id=${usuario.id})}" method="get" type="submit">Perfil</a>
+
         </div>
     </nav>
 </div>
+
