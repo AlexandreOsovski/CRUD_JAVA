@@ -34,12 +34,12 @@ public class UsuarioController {
         return "AreaDoCliente/cadastro";
     }
 
-//    @GetMapping("/perfil/{id}")
-//    public String perfil(final Model model){
-//        model.addAttribute("usuarioModel", usuarioRepository);
-//        return "AreaDoCliente/cadastro";
-//    }
-
+    @GetMapping(value = "/perfil/{id}")
+    public String getPerfil(Model model, @PathVariable Long id) {
+        UsuarioModel usuarioModel = usuarioRepository.getById(id);
+        model.addAttribute("usuarioModel", usuarioModel);
+        return "AreaDoCliente/perfil";
+    }
 
 
     @PostMapping
@@ -50,21 +50,12 @@ public class UsuarioController {
             result.rejectValue("email", "incorrectCredentials", "Email or password incorrect");
             return "redirect:/ AreaDoCliente/login";
         } else {
-            model.addAttribute("usuario", verificaUsuario);
+            model.addAttribute("usuarioModel", verificaUsuario);
             return "Dashboard/dashboard";
         }
     }
 
-
-    @GetMapping("/perfil/{id}")
-    public String perfil(@PathVariable long id,final Model model) {
-        UsuarioModel usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
-        model.addAttribute("usuario", usuario);
-        return "AreaDoCliente/perfil";
-    }
-
-    @PostMapping("/salvarUsuario/")
+    @PostMapping(value = {"/salvarUsuario/"})
     public ModelAndView salvaUsuarios(@ModelAttribute @Valid UsuarioModel usuarioModel, BindingResult result) {
 
         if (result.hasErrors()) {
@@ -96,9 +87,7 @@ public class UsuarioController {
         return modelAndView;
     }
 
-
-
-    @PostMapping("/alterarUsuario/")
+    @PostMapping(value = {"/alterarUsuario/"})
     public ModelAndView updateUsuario(@Valid @ModelAttribute UsuarioModel usuarioAtualizado) {
         long id = usuarioAtualizado.getId();
 
@@ -127,17 +116,18 @@ public class UsuarioController {
         }
 
         UsuarioModel usuarioAtualizadoSalvo = usuarioRepository.save(usuarioExistente);
-        ModelAndView modelAndView = new ModelAndView("redirect:/perfil/" + id);
+        ModelAndView modelAndView = new ModelAndView("AreaDoCliente/login");
         return modelAndView;
     }
 
-    @DeleteMapping("/deletarUsuario/{id}")
-    public String deleteUsuario(@PathVariable long id) {
+    @PostMapping(value = {"/deletarUsuario/{id}"})
+    public ModelAndView deleteUsuario(@PathVariable long id) {
         UsuarioModel usuarioExistente = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com id: " + id));
 
         usuarioRepository.deleteById(usuarioExistente.getId());
-        return "redirect:/Usuario/cadastro";
+        ModelAndView modelAndView = new ModelAndView("AreaDoCliente/login");
+        return modelAndView;
     }
 
 
