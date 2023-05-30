@@ -4,65 +4,74 @@
 <body>
 <div th:replace="~{layouts/navbar :: navbar_dashboard}"></div>
 
-<form th:action="@{/areadocliente/alterarUsuario/}" th:object="${usuarioModel}" method="post">
-    <div class="container-fluid">
-        <div class="row d-flex">
-            <div class="col-12">
-                <div class="d-flex mt-5 justify-content-center">
-                    <div class="card mb-3 card-cadastro">
-                        <div class="card-body">
-                            <h2 class="text-dark">Alterar Dados</h2>
-                            <input type="hidden" th:field="*{id}">
-                            <div class="col-12 mt-2 mb-3">
-                                <label class="col-12 mb-2 mt-2 text-dark">Nome*</label>
-                                <input class="input-cadastro-login col-12" type="text" name="nome" th:field="*{nome}" autocomplete="off">
-                            </div>
-                            <div class="col-12 mt-2 mb-3">
-                                <label class="col-12 mb-2 mt-2 text-dark">Sobrenome*</label>
-                                <input class="input-cadastro-login col-12" type="text" name="sobrenome" th:field="*{sobrenome}" autocomplete="off">
-                            </div>
-
-                            <div class="col-12 mb-3">
-                                <label class="col-12 mb-2 mt-2 text-dark">E-mail*</label>
-                                <input class="input-cadastro-login col-12" type="email" name="email" th:field="*{email}" autocomplete="off">
-                            </div>
-                            <div class="col-12 mb-3">
-                                <label class="col-12 mb-2 mt-2 text-dark">Senha*</label>
-                                <input class="input-cadastro-login col-12" type="password" name="senha" th:field="*{senha}" autocomplete="off">
-                            </div>
-                            <hr class="text-dark mt-2">
-                            <div class="col-12 mt-2">
-                                <button class="botao-geral" style="width: 100%;" role="button">Alterar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-<form th:action="@{/areadocliente/deletarUsuario/{id}(id=${usuarioModel.id})}" method="post">
-    <div class="container-fluid">
-        <div class="row d-flex">
-            <div class="col-12">
-                <div class="d-flex mt-5 justify-content-center">
-                    <div class="card mb-3 card-cadastro">
-
-                        <div class="card-body" >
-                            <h2 class="text-dark">Deletar sua conta?</h2>
-
-                            <p class="text-dark">Essa decisão é irreversível</p>
-                            <div class="col-12 mt-2">
-                                <button class="botao-geral botao-deletar">Deletar conta</button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <form th:action="@{/areadocliente/alterarUsuario/}" th:object="${usuarioModel}" method="post">
+                <div class="container-fluid">
+                    <div class="row d-flex">
+                        <div class="col-12">
+                            <div class="d-flex mt-5 justify-content-center">
+                                <div class="card mb-3 card-cadastro">
+                                    <div class="card-body">
+                                        <h2 class="text-dark">Alterar Dados</h2>
+                                        <input type="hidden" th:field="*{id}">
+                                        <div class="col-12 mt-2 mb-3">
+                                            <label class="col-12 mb-2 mt-2 text-dark">Nome*</label>
+                                            <input class="input-cadastro-login col-12" type="text" name="nome" th:field="*{nome}" autocomplete="off">
+                                        </div>
+                                        <div class="col-12 mt-2 mb-3">
+                                            <label class="col-12 mb-2 mt-2 text-dark">Sobrenome*</label>
+                                            <input class="input-cadastro-login col-12" type="text" name="sobrenome" th:field="*{sobrenome}" autocomplete="off">
+                                        </div>
+            
+                                        <div class="col-12 mb-3">
+                                            <label class="col-12 mb-2 mt-2 text-dark">E-mail*</label>
+                                            <input class="input-cadastro-login col-12" type="email" name="email" th:field="*{email}" autocomplete="off">
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label class="col-12 mb-2 mt-2 text-dark">Senha*</label>
+                                            <input class="input-cadastro-login col-12" type="password" name="senha" th:field="*{senha}" autocomplete="off">
+                                        </div>
+                                        <hr class="text-dark mt-2">
+                                        <div class="col-12 mt-2">
+                                            <button class="botao-geral" style="width: 100%;" role="button">Alterar</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
+            
+            <form th:action="@{/areadocliente/deletarUsuario/{id}(id=${usuarioModel.id})}" method="post">
+                <div class="container-fluid">
+                    <div class="row d-flex">
+                        <div class="col-12">
+                            <div class="d-flex mt-5 justify-content-center">
+                                <div class="card mb-3 card-cadastro">
+            
+                                    <div class="card-body" >
+                                        <div class="textos">
+                                            <h2 class="text-dark">Deletar sua conta?</h2>
+                                            <p class="text-dark">Essa decisão é irreversível</p>
+                                        </div>
+                                        <div class="col-12 mt-2 d-flex" style="justify-content: center; align-items: center;">
+                                            <button class="botao-geral botao-deletar">Deletar conta</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
+
     </div>
-</form>
+
+</div>
 
 </body>
 

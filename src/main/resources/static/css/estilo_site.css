@@ -64,6 +64,12 @@ button {
     background-color: rgba(255, 255, 255);
 }
 
+.botao-deletar:hover{
+    background-color: #dc3545;
+    color: #d6d6e7;
+    border-color: 1px solid #dc3545;
+}
+
 
 .botao-geral {
 
@@ -71,7 +77,7 @@ button {
     margin-bottom: 20px;
     align-items: center;
     appearance: none;
-    background-color: #FCFCFD;
+    
     border-radius: 4px;
     border-width: 0;
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
